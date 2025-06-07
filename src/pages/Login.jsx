@@ -1,6 +1,6 @@
 import React from "react";
 import "../../public/style.css";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import Form from "../../components/Login-Form";
 import LoginImg from "../assets/login.png";
 import Image from "../../components/Image";

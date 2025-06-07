@@ -6,6 +6,10 @@ import Home from "../src/pages/Home";
 import AboutUs from "../src/pages/AboutUs";
 import Login from "../src/pages/Login";
 import SignUp from "../src/pages/SignUp";
+import Vacancies from "../src/pages/Vacancies";
+import JobStatus from "../src/pages/JobStatus";
+import ApplyForm from "../src/pages/ApplyForm";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -15,10 +19,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/login" element={<Login />} /> 
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        {/* <Route path="/vacancies" element={<Vacancies />} />
-        <Route path="/login" element={<Login />} /> */}
+        <Route path="/vacancies" element={<Vacancies />} />
+        <Route path="/vacancies/job-status" element={<JobStatus />} />
+        <Route path="/vacancies/apply-form" element={<ApplyForm/>} />
+        <Route path="/admin/creation-form" element={<div>Jobs for You Section</div>} />
       </Routes>
     </Router>
   );

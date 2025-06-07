@@ -1,8 +1,7 @@
 import React from "react";
 import InputTextBox from "./Login-input-text";
 import Label from "./Label";
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 
 function Form(props) {
   return (
@@ -18,7 +17,7 @@ function Form(props) {
         </button>
 
         <p className="login-text">
-          Don't have an account?  <Link to="/signup">Sign Up</Link>
+          Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>
 
         <div className="other-login-methods">

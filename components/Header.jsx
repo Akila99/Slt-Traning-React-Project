@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import "../public/style.css";
 import NavBar from "./NavBar";
 import Image from "./Image";
 import CoverImage from "../src/assets/cover-img.png";
 import Logo from "../src/assets/SLTMobitel_Logo.png.webp";
+import VacancyNavBar from "./VacancyNavBar";
 
 function Header(props) {
-  const [isHomePage, setIsHomePage] = useState(false);
-
-  useEffect(() => {
-    setIsHomePage(props.isHomePage || false);
-  }, [props.isHomePage]);
+  const location = useLocation();
+  const isVacancyPage =
+    location.pathname === "/vacancies" ||
+    location.pathname.startsWith("/vacancies/");
+  const isHomePage = location.pathname === "/";
 
   return (
     <header
       className="header"
-      style={{ backgroundColor: isHomePage ? "#0e1238" : "white" }}
+      style={
+        !isVacancyPage
+          ? { backgroundColor: isHomePage ? "#0e1238" : "white" }
+          : undefined
+      }
     >
       <div className="navbar">
         {/* <!-- <img class="logo" src="" alt="slt logo" /> --> */}
@@ -23,7 +29,7 @@ function Header(props) {
           <img className="logo" src={Logo} alt="slt logo" />
           <h1 className="program-name">Traning program</h1>
         </div>
-        <NavBar />
+        {isVacancyPage ? <VacancyNavBar /> : <NavBar />}
       </div>
       {isHomePage && (
         <img src={CoverImage} alt="cover image" className="cover-img" />
