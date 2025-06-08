@@ -9,8 +9,13 @@ function JobApplyFormInputElement(props) {
     <div className="input-element">
       <Label for={props.for} label={props.label} />
       <p className="colon">:</p>
-      <Input name={props.inputName} id={props.inputid} required />
-      {/* <input type="text" name="dob" id="dob" required /> */}
+      <Input
+        name={props.inputName}
+        id={props.inputid}
+        value={props.value}
+        onChange={props.onChange}
+        required={props.required}
+      />
     </div>
   );
 }

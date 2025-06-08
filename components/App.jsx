@@ -10,7 +10,9 @@ import Vacancies from "../src/pages/Vacancies";
 import JobStatus from "../src/pages/JobStatus";
 import ApplyForm from "../src/pages/ApplyForm";
 import JobCreationForm from "../src/pages/JobCreation-form";
-import JobModification from "../src/pages/JobModification"
+import JobModification from "../src/pages/JobModification";
+import RecievedCv from "../src/pages/RecievedCv";
+import AcceptedCv from "../src/pages/AcceptedCv";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -28,8 +30,8 @@ function App() {
         <Route path="/vacancies/apply-form" element={<ApplyForm />} />
         <Route path="/admin/creation-form" element={<JobCreationForm />} />
         <Route path="/admin/job-modification" element={<JobModification />} />
-        <Route path="/admin/received-cv" element={<JobCreationForm />} />
-        <Route path="/admin/accepted-cv" element={<JobCreationForm />} />
+        <Route path="/admin/received-cv" element={<RecievedCv />} />
+        <Route path="/admin/accepted-cv" element={<AcceptedCv />} />
       </Routes>
     </Router>
   );

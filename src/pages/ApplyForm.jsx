@@ -1,42 +1,93 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../public/style.css";
 import { Link } from "react-router-dom";
 import Header from "../../components/Header";
 import InputElement from "../../components/JobApplyForm-Input-Element";
+import { useLocation } from "react-router-dom";
+import FileUpload from "../../components/FileUpload";
 
 function ApplyForm() {
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const jobName = params.get("jobName");
+
+  const [formData, setFormData] = useState({
+    jobTittle: { jobName },
+    namWithIni: "",
+    fullName: "",
+    gender: "",
+    dob: "",
+    email: "",
+    contactNum: "",
+    field: "",
+    cvFile: null,
+  });
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileUpload = (file) => {
+    setSelectedFile(file);
+  };
+
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form Data:", formData);
+    setFormData({
+      jobTittle: jobName ,
+      namWithIni: "",
+      fullName: "",
+      gender: "",
+      dob: "",
+      email: "",
+      contactNum: "",
+      field: "",
+    });
+    alert("Job vacancy applyed successfully!");
+  };
+
   function handleClick() {
     console.log("Button clicked");
   }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
     <section className="background-img">
       <Header />
-      <div className="job-apply-form">
+      <form onSubmit={handleSubmit} className="job-apply-form">
         <div className="input-element">
-          <label for="job_Title">Job Title</label>
+          <label htmlFor="job_Title">Job Title</label>
           <p className="colon">:</p>
-          <p id="jobDisplay">Loading......</p>
-          {/* <!-- <input
-            type="text"
-            name="jobDisplay"
-            className="jobDisplay"
-            id="jobDisplay"
-            readonly
-          /> --> */}
+          <p value={formData.jobTittle} id="jobDisplay">
+            {jobName}
+          </p>
         </div>
 
         <InputElement
-          for="name"
+          for="namWithIni"
           label="Name with initials"
-          inputName="name"
-          inputid="name"
+          inputName="namWithIni"
+          inputid="namWithIni"
+          value={formData.namWithIni}
+          onChange={handleChange}
           required
         />
         <InputElement
-          for="full-name"
+          for="fullName"
           label="Full Name"
-          inputName="full-name"
-          inputid="full-name"
+          inputName="fullName"
+          inputid="fullName"
+          value={formData.fullName}
+          onChange={handleChange}
           required
         />
         <InputElement
@@ -44,6 +95,8 @@ function ApplyForm() {
           label="Gender"
           inputName="gender"
           inputid="gender"
+          value={formData.gender}
+          onChange={handleChange}
           required
         />
         <InputElement
@@ -51,6 +104,8 @@ function ApplyForm() {
           label="Data of Birth"
           inputName="dob"
           inputid="dob"
+          value={formData.dob}
+          onChange={handleChange}
           required
         />
         <InputElement
@@ -58,13 +113,17 @@ function ApplyForm() {
           label="Email"
           inputName="email"
           inputid="email"
+          value={formData.email}
+          onChange={handleChange}
           required
         />
         <InputElement
-          for="num"
+          for="contactNum"
           label="Contact Number"
-          inputName="num"
-          inputid="num"
+          inputName="contactNum"
+          inputid="contactNum"
+          value={formData.contactNum}
+          onChange={handleChange}
           required
         />
         <InputElement
@@ -72,45 +131,16 @@ function ApplyForm() {
           label="Field"
           inputName="field"
           inputid="field"
+          value={formData.field}
+          onChange={handleChange}
           required
         />
-
-        <div className="dropDown-container">
-          <p>Upload your CV here</p>
-          <div className="upload-area" id="upload-area">
-            <p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                fill="currentColor"
-                className="bi bi-cloud-upload"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"
-                />
-                <path
-                  fill-rule="evenodd"
-                  d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708z"
-                />
-              </svg>
-              Drag & Drop File Here
-              <br />
-              or
-              <br />
-              <button onClick={handleClick}>Browse Here</button>
-            </p>
-            <input type="file" id="file-input" />
-            <div className="file-name" id="file-name"></div>
-          </div>
-        </div>
+        <FileUpload onFileSelect={handleFileUpload} />
 
         <div className="btn-container">
           <button className="vacancy-form-submit">Submit</button>
         </div>
-      </div>
+      </form>
     </section>
   );
 }

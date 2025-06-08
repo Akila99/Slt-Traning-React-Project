@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../public/style.css";
+import { Link } from "react-router-dom";
 
 function JobCard(props) {
   const [isClassActive, setClassActive] = useState(false);
@@ -11,7 +12,7 @@ function JobCard(props) {
   return (
     <div className="container">
       <div className="rectangle">
-        <p>{props.jobName}</p>
+        <p>{props.jobName} </p>
       </div>
       <div
         className={`content ${isClassActive ? "font-size" : ""}`}
@@ -26,9 +27,13 @@ function JobCard(props) {
             ))}
           </ul>
         </div>
-        <a className="apply" style={props.style || {}} href={props.applyLink}>
+        <Link
+          className="apply"
+          style={props.style || {}}
+          to={`${props.applyLink}?jobName=${encodeURIComponent(props.jobName)}`}
+        >
           Apply Now
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import ReusableTable from "../../components/ReusableTabel";
 import applicantData from "../ApplicationData";
 
-function RecievedCv() {
+function AcceptedCv() {
   const applicantColumns = [
     { header: "Job Title", accessor: "jobTitle" },
     { header: "Name", accessor: "name" },
@@ -14,13 +14,12 @@ function RecievedCv() {
     { header: "Contact Number", accessor: "contactNumber" },
     { header: "CV", accessor: "cv" },
   ];
-
   return (
     <section className="admin-background-image">
       <div className="admin-background">
         <AdminSidePanel />
         <div className="recieved-cv-container">
-          <h1>Received CVs</h1>
+          <h1>Accepted CVs</h1>
           <div className="recieved-cv-table">
             <ReusableTable columns={applicantColumns} data={applicantData} />
           </div>
@@ -29,5 +28,4 @@ function RecievedCv() {
     </section>
   );
 }
-
-export default RecievedCv;
+export default AcceptedCv;

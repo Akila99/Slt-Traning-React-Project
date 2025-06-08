@@ -13,7 +13,7 @@ const jobCardInormation = [
       "Network devices and security knowledge.",
       "Networking device configuration knowledge.",
     ],
-    applyLink: "https://www.sltmobitel.lk/en/careers",
+    applyLink: "/vacancies/apply-form",
     style: { marginTop: "3rem" },
   },
 
@@ -31,7 +31,7 @@ const jobCardInormation = [
       "Preference will be given to the candidates who are prize winners",
       "Be a resilient leader with excellent interpersonal and communication skills.",
     ],
-    applyLink: "https://www.sltmobitel.lk/en/careers",
+    applyLink: "/vacancies/apply-form",
   },
 
   {
@@ -51,7 +51,7 @@ const jobCardInormation = [
                     Deployment & Management and the area of IT & Digital
                     Platforms would be a definite advantage.`,
     ],
-    applyLink: "https://www.sltmobitel.lk/en/careers",
+    applyLink: "/vacancies/apply-form",
     classStyleActive: true,
   },
   {
@@ -69,7 +69,7 @@ const jobCardInormation = [
                     (Telecommunication / Electrical/Electronic/ ICT/Power / Air
                     Conditioning etc).`,
     ],
-    applyLink: "https://www.sltmobitel.lk/en/careers",
+    applyLink: "/vacancies/apply-form",
     styleContent: { fontSize: "0.75em", marginBottom: "0.5rem" },
   },
 ];

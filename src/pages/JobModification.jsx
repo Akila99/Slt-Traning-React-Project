@@ -1,279 +1,100 @@
 import React, { useState } from "react";
-
 import AdminSidePanel from "../../components/AdminSidePanel";
+import SearchBar from "../../components/SearchBar";
 import { Link, useLocation } from "react-router-dom";
+import ReusableTable from "../../components/ReusableTabel";
+import initialJobList from "../jobList";
+import EditIcon from "../assets/EditIcon";
+import DeleteIcon from "../assets/DeleteIcon";
 
 function JobModification() {
+  const [jobList, setJobList] = useState(initialJobList);
+
+  const [editingId, setEditingId] = useState(null); // ID of the row being edited
+  const [editedRow, setEditedRow] = useState({});
+
+  const columns = [
+    { header: "Job Field", accessor: "jobField" },
+    { header: "Job Title", accessor: "jobTitle" },
+    { header: "Created Date", accessor: "createdDate" },
+    { header: "Status", accessor: "status" },
+    // { header: "Modification", accessor: "modification" },
+  ];
+
+  const handleEdit = (row) => {
+    // const newTitle = prompt("Enter new job title:", row.jobTitle);
+    // if (newTitle && newTitle.trim() !== "") {
+    //   const updatedList = jobList.map((job) =>
+    //     job.id === row.id ? { ...job, jobTitle: newTitle } : job
+    //   );
+    //   setJobList(updatedList);
+    // }
+    setEditingId(row.id);
+    setEditedRow({ ...row });
+  };
+
+  const handleSave = () => {
+    const updatedList = jobList.map((job) =>
+      job.id === editingId ? editedRow : job,
+    );
+    setJobList(updatedList);
+    setEditingId(null);
+    setEditedRow({});
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setEditedRow({});
+  };
+
+  const handleDelete = (row) => {
+    if (window.confirm(`Are you sure you want to delete "${row.jobTitle}"?`)) {
+      const updatedList = jobList.filter((job) => job.id !== row.id);
+      setJobList(updatedList);
+    }
+  };
+
+  const actions = [
+    {
+      svg: EditIcon,
+      onClick: handleEdit,
+      style: { marginRight: "10px", all: "unset", cursor: "pointer" },
+    },
+    {
+      svg: DeleteIcon,
+      onClick: handleDelete,
+      style: { marginRight: "10px", all: "unset", cursor: "pointer" },
+    },
+  ];
+
   return (
     <section className="admin-background-image">
       <div className="admin-background">
         <AdminSidePanel />
-        {/* <div className="side-bar">
-          <div className="nav-container">
-            <header className="header">
-              <div className="navbar">
-                <div className="company-name">
-                  <img
-                    className="logo"
-                    src="./assert/SLTMobitel_Logo.png.webp"
-                    alt="slt logo"
-                  />
-                  <h1 className="program-name">Traning program</h1>
-                </div>
-                <nav className="nav-links">
-                  <a className="links" href="./home.html">
-                    Home
-                  </a>
-
-                  <a className="links" href="#">
-                    Login
-                  </a>
-                </nav>
-              </div>
-            </header>
-          </div>
-          <div className="side-bar-options">
-            <a className="admin-coulmns" href="./JobCreationForm.html">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                fill="currentColor"
-                className="bi bi-caret-right-square-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4z" />
-              </svg>
-              Job Creation
-            </a>
-            <a className="admin-coulmns" href="./jobModification.html">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                fill="currentColor"
-                className="bi bi-caret-right-square-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4z" />
-              </svg>
-              Job Modification
-            </a>
-            <a className="admin-coulmns" href="./receivedCv.html">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                fill="currentColor"
-                className="bi bi-caret-right-square-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4z" />
-              </svg>
-              Received CVs
-            </a>
-
-            <a className="admin-coulmns" href="./acceptedCv.html">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                fill="currentColor"
-                className="bi bi-caret-right-square-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4z" />
-              </svg>
-              Accepted CVs
-            </a>
-          </div>
-        </div> */}
 
         <div className="modification-table">
-          <div className="search-bar-div">
-            <div className="search-bar">
-              <input type="search" name="searchItem" placeholder="Search" />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="white"
-                className="bi bi-search"
-                viewBox="0 0 16 16"
-              >
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-              </svg>
-            </div>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Job ID</th>
-                <th>Job Field</th>
-                <th>Created Date</th>
-                <th>Status</th>
-                <th>Modification</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td>IT</td>
-                <td>QA Trainee</td>
-                <td>2023/10/14</td>
-                <td>Rejected</td>
-                <td>
-                  <a style={{textDecoration: "none", margin: "5px"}} href="">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="25"
-                      fill="black"
-                      className="bi bi-pencil-square"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                      <path
-                        fill-rule="evenodd"
-                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
-                      />
-                    </svg>
-                  </a>
-                  <a href="">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="25"
-                      fill="black"
-                      className="bi bi-trash"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                    </svg>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-
-            <tbody>
-              <tr>
-                <td>HR</td>
-                <td>HR Trainee</td>
-                <td>2023/09/11</td>
-                <td>Accepted</td>
-                <td>
-                  <a style={{textDecoration: "none", margin: "5px"}} href="">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="25"
-                      fill="black"
-                      className="bi bi-pencil-square"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                      <path
-                        fill-rule="evenodd"
-                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
-                      />
-                    </svg>
-                  </a>
-                  <a href="">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="25"
-                      fill="black"
-                      className="bi bi-trash"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                    </svg>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-
-            <tbody>
-              <tr>
-                <td>Finance</td>
-                <td>Accountant</td>
-                <td>2023/08/16</td>
-                <td>Rejected</td>
-                <td>
-                  <a style={{textDecoration: "none", margin: "5px"}} href="">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="25"
-                      fill="black"
-                      className="bi bi-pencil-square"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                      <path
-                        fill-rule="evenodd"
-                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
-                      />
-                    </svg>
-                  </a>
-                  <a href="">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="25"
-                      fill="black"
-                      className="bi bi-trash"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                    </svg>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-
-            <tbody>
-              <tr>
-                <td>IT</td>
-                <td>Web Developer</td>
-                <td>2023/08/02</td>
-                <td>Accepted</td>
-                <td>
-                  <a style={{textDecoration: "none", margin: "5px"}} href="">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="25"
-                      fill="black"
-                      className="bi bi-pencil-square"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                      <path
-                        fill-rule="evenodd"
-                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
-                      />
-                    </svg>
-                  </a>
-                  <a href="">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="25"
-                      fill="black"
-                      className="bi bi-trash"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                    </svg>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <SearchBar />
+          <ReusableTable
+            columns={columns}
+            data={jobList}
+            modification={actions}
+            editingId={editingId}
+            editedRow={editedRow}
+            setEditedRow={setEditedRow}
+            setEditingId={setEditingId}
+            onSave={(updatedRow) => {
+              const updatedList = jobList.map((job) =>
+                job.id === updatedRow.id ? updatedRow : job,
+              );
+              setJobList(updatedList);
+              setEditingId(null);
+              setEditedRow({});
+            }}
+            onCancel={() => {
+              setEditingId(null);
+              setEditedRow({});
+            }}
+          />
         </div>
       </div>
     </section>
