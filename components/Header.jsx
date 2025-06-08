@@ -13,18 +13,18 @@ function Header(props) {
     location.pathname === "/vacancies" ||
     location.pathname.startsWith("/vacancies/");
   const isHomePage = location.pathname === "/";
+  const isAdminPage = location.pathname.startsWith("/admin/");
 
   return (
     <header
       className="header"
       style={
-        !isVacancyPage
+        !isAdminPage && !isVacancyPage
           ? { backgroundColor: isHomePage ? "#0e1238" : "white" }
           : undefined
       }
     >
       <div className="navbar">
-        {/* <!-- <img class="logo" src="" alt="slt logo" /> --> */}
         <div className="company-name">
           <img className="logo" src={Logo} alt="slt logo" />
           <h1 className="program-name">Traning program</h1>
@@ -34,7 +34,6 @@ function Header(props) {
       {isHomePage && (
         <img src={CoverImage} alt="cover image" className="cover-img" />
       )}
-      {/* <Image src ={CoverImage} alt="Cover image"/> */}
     </header>
   );
 }

@@ -5,9 +5,9 @@ import Header from "../../components/Header";
 import InputElement from "../../components/JobApplyForm-Input-Element";
 
 function ApplyForm() {
-    function handleClick() {
-        console.log("Button clicked");
-    }
+  function handleClick() {
+    console.log("Button clicked");
+  }
   return (
     <section className="background-img">
       <Header />
@@ -25,13 +25,55 @@ function ApplyForm() {
           /> --> */}
         </div>
 
-        <InputElement for = "name" label ="Name with initials" inputName ="name" inputid ="name" required/>
-        <InputElement for = "full-name" label ="Full Name" inputName ="full-name" inputid ="full-name" required/>
-        <InputElement for = "gender" label ="Gender" inputName ="gender" inputid ="gender" required/>
-        <InputElement for = "dob" label ="Data of Birth" inputName ="dob" inputid ="dob" required/>
-        <InputElement for = "email" label ="Email" inputName ="email" inputid ="email" required/>
-        <InputElement for = "num" label ="Contact Number" inputName ="num" inputid ="num" required/>
-        <InputElement for = "field" label ="Field" inputName ="field" inputid ="field" required/>
+        <InputElement
+          for="name"
+          label="Name with initials"
+          inputName="name"
+          inputid="name"
+          required
+        />
+        <InputElement
+          for="full-name"
+          label="Full Name"
+          inputName="full-name"
+          inputid="full-name"
+          required
+        />
+        <InputElement
+          for="gender"
+          label="Gender"
+          inputName="gender"
+          inputid="gender"
+          required
+        />
+        <InputElement
+          for="dob"
+          label="Data of Birth"
+          inputName="dob"
+          inputid="dob"
+          required
+        />
+        <InputElement
+          for="email"
+          label="Email"
+          inputName="email"
+          inputid="email"
+          required
+        />
+        <InputElement
+          for="num"
+          label="Contact Number"
+          inputName="num"
+          inputid="num"
+          required
+        />
+        <InputElement
+          for="field"
+          label="Field"
+          inputName="field"
+          inputid="field"
+          required
+        />
 
         <div className="dropDown-container">
           <p>Upload your CV here</p>
@@ -58,9 +100,7 @@ function ApplyForm() {
               <br />
               or
               <br />
-              <button onClick={handleClick}>
-                Browse Here
-              </button>
+              <button onClick={handleClick}>Browse Here</button>
             </p>
             <input type="file" id="file-input" />
             <div className="file-name" id="file-name"></div>
