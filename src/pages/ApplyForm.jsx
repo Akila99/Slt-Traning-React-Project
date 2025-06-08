@@ -29,13 +29,11 @@ function ApplyForm() {
     setSelectedFile(file);
   };
 
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Data:", formData);
     setFormData({
-      jobTittle: jobName ,
+      jobTittle: jobName,
       namWithIni: "",
       fullName: "",
       gender: "",

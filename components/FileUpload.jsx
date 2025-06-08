@@ -39,10 +39,11 @@ function FileUpload() {
           </svg>
           Drag & Drop File Here
           <br />
-          
           or
           <br />
-          <button type="button" onClick={handleClick}>Browse Here</button>
+          <button type="button" onClick={handleClick}>
+            Browse Here
+          </button>
         </p>
 
         <input
